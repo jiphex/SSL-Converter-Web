@@ -1,0 +1,12 @@
+%h2="Upload New Certificate"
+%form{:name=>'SSL Upload', :method=>:POST, :action=>"/upload", :enctype => 'multipart/form-data'}
+  %p
+    %label{:for => 'certpass'}="SSL Certificate Password:"
+    %input#certpass{:name=>'certpass',:type=>'password'}
+  %p
+    %label{:for => 'certfile'}="SSL Certificate File:"
+    %input#certfile{:name=>'certfile',:type=>'file'}
+  %input#submit{:type=>:submit,:value=>"Upload Certificate"}
+%h2
+  ="OR "
+  %a{:href=>'/process'}="Just skip to the list of your certificates"

@@ -1,0 +1,14 @@
+%html
+  %head
+    %title= @title
+    %link{:href=>'css/style.css',:rel=>'stylesheet'}
+    %link{:href=>'css/thickbox.css',:rel=>'stylesheet'}
+    %script{:src=>'js/jquery.js'}
+    %script{:src=>'js/thickbox-compressed.js'}
+    %script{:src=>'js/local.js'}
+  %body
+    #content
+      #title
+        %h1= "#{@title} for #{@key}"
+      #wrapper
+        =yield

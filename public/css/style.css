@@ -1,0 +1,15 @@
+body {
+	font-family: sans-serif;
+	margin: 10px;
+}
+
+#content {
+}
+
+.expired {
+	color: red;
+}
+
+.unexpired {
+	color: green;
+}

@@ -1,0 +1,16 @@
+%h2="X509 Certificate"
+%p
+  %strong="Subject:"
+  %pre=@sdata[:subject]
+%p
+  %strong="Valid Since:"
+  %pre=@sdata[:not_before]
+%p
+  %strong="Valid Until:"
+  %pre=@sdata[:not_after]
+%p
+  %strong="Issuer:"
+  %pre=@sdata[:issuer]
+%p
+  %strong="Serial#:"
+  %pre=@sdata[:serial]

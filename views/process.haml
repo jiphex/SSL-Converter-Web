@@ -1,0 +1,12 @@
+%h2= "Your uploaded certificates:"
+- @certs.each do |cn,ck|
+  - if Time.now < ck[0].not_after
+    %li.unexpired
+      ="#{cn} --- valid from #{ck[0].not_before} until #{ck[0].not_after}"
+      %a.thickbox{:href=>"/certinfo.html/#{cn}?height=350&width=600"}="Show"
+      %a{:href=>"/download.pem/#{cn}"}="Download PEM"
+      %a{:href=>"/download.pfx/#{cn}"}="Download PFX"
+  - else
+    %li.expired
+      ="#{cn} --- valid from #{ck[0].not_before} until #{ck[0].not_after}"
+      %a.thickbox{:href=>"/certinfo.html/#{cn}?height=350&width=600"}="Show"
