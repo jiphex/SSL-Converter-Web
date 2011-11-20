@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -rubygems
 
 # TODO: Convert to use SQLite for the certificate store
 
@@ -32,7 +32,8 @@ helpers do
 		return true # TODO: Implement
 	end
 
-	def user_certificates(key) ucerts = {}
+	def user_certificates(key) 
+	  ucerts = {}
 		targetdir = "uploads/#{session[:skey]}"
 		return ucerts unless File.directory? targetdir
 		Dir.foreach(targetdir) do |fn|
@@ -141,6 +142,13 @@ get '/certinfo.:format/:certid' do
 	when 'html'
 		haml :ajax_certinfo, :layout => false
 	end
+end
+
+get '/pem/:certid' do
+  set :content_type, "text/plain"
+  certka = get_certdata(params[:certid])
+  @pem = certka[0].to_pem+certka[1].to_pem
+  haml :ajax_pem, :layout => false
 end
 
 get '/download.:format/:certid' do

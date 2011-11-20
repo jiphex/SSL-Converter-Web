@@ -2,11 +2,14 @@
 - @certs.each do |cn,ck|
   - if Time.now < ck[0].not_after
     %li.unexpired
-      ="#{cn} --- valid from #{ck[0].not_before} until #{ck[0].not_after}"
-      %a.thickbox{:href=>"/certinfo.html/#{cn}?height=350&width=600"}="Show"
+      ="#{cn} --- valid until #{ck[0].not_after}"
+      %a.thickbox{:href=>"/certinfo.html/#{cn}?height=350&width=680"}="Detail"
+      -#TODO: Do something more elegant here…
+      %a{:href=>"/pem/#{cn}?height=800&width=500"}="Copy"
       %a{:href=>"/download.pem/#{cn}"}="Download PEM"
+      -#TODO: Prompt for PFX password
       %a{:href=>"/download.pfx/#{cn}"}="Download PFX"
   - else
     %li.expired
-      ="#{cn} --- valid from #{ck[0].not_before} until #{ck[0].not_after}"
+      ="#{cn} --- valid until #{ck[0].not_after}"
       %a.thickbox{:href=>"/certinfo.html/#{cn}?height=350&width=600"}="Show"

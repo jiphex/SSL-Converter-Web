@@ -9,6 +9,8 @@
   %body
     #content
       #title
-        %h1= "#{@title} for #{@key}"
+        %h1
+          =@title
+        .hidden=@key
       #wrapper
         =yield
