@@ -7,10 +7,25 @@ body {
 	display: none;
 }
 
+#title #nav {
+  border: 1px solid gray;
+  border-width: 1px 0px 1px 0px;
+  padding: 4px;
+}
+
+#title #nav a {
+  margin-right: 10px;
+}
+
 .expired {
 	color: red;
 }
 
 .unexpired {
 	color: green;
+}
+
+span#about {
+  float: right;
+  color: #ccc;
 }

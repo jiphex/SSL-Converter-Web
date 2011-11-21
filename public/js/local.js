@@ -1,5 +1,5 @@
-function show_cert(certid, el) {
-	$.getJSON('/certinfo.json/'+certid, function(data) {
-			alert(data['subject']);
-	});
+function delete_cert(certid) {
+	$.del('/certificate/'+certid, function(message) {
+		alert(message);
+	})
 }

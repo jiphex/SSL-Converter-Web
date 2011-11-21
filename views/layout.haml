@@ -4,6 +4,7 @@
     %link{:href=>'css/style.css',:rel=>'stylesheet'}
     %link{:href=>'css/thickbox.css',:rel=>'stylesheet'}
     %script{:src=>'js/jquery.js'}
+    %script{:src=>'js/jquery.rest.js'}
     %script{:src=>'js/thickbox-compressed.js'}
     %script{:src=>'js/local.js'}
   %body
@@ -12,5 +13,11 @@
         %h1
           =@title
         .hidden=@key
+        #nav
+          %a{:href=>"/"}="Upload New"
+          %a{:href=>"/process"}="List Certificates"
+          %a{:href=>"/logout"}="Logout"
+          %span#about
+            James Hannah - 2011
       #wrapper
         =yield
