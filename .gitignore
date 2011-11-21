@@ -2,3 +2,4 @@ uploads/*
 *.swp
 log/*
 *.patch
+*.db

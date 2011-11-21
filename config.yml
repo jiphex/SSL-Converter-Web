@@ -5,7 +5,7 @@
     user: jhan
     group: jhan
     port: 4567
-    pid: /home/jhan/SSL-Conveter-Web/sslcon.pid
+    pid: /home/jhan/SSL-Converter-Web/log/sslcon.pid
     rackup: /home/jhan/SSL-Converter-Web/sslcon.ru
     log: /home/jhan/SSL-Converter-Web/log/sslcon-log
     max_conns: 1024
