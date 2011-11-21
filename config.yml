@@ -1,0 +1,14 @@
+---
+    environment: production
+    chdir: /home/jhan/SSL-Converter-Web
+    address: 127.0.0.1
+    user: jhan
+    group: jhan
+    port: 4567
+    pid: /home/jhan/SSL-Conveter-Web/sslcon.pid
+    rackup: /home/jhan/SSL-Converter-Web/sslcon.ru
+    log: /home/jhan/SSL-Converter-Web/log/sslcon-log
+    max_conns: 1024
+    timeout: 30
+    max_persistent_conns: 512
+    daemonize: true

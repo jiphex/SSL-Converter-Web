@@ -4,7 +4,7 @@ body {
 }
 
 .hidden {
-	display: none;
+	color: red;
 }
 
 #title #nav {

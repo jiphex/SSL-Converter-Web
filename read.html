@@ -1,0 +1,18 @@
+<h1>SSL Format Converter</h1>
+<p>A simple web application which allows users to upload SSL 
+certificates/keys as X509 PEM files or password-protected PKCS7 
+.DER/.PFX files, and then allows them to download them as PEM or DER 
+files, regardless of the original upload format.</p>
+<p>OpenSSL is used for all the SSL certificate conversion.</p>
+<p>Requirements:</p>
+<ul>
+<li>sinatra</li>
+<li>haml</li>
+<li>json</li>
+<li>sqlite3</li>
+<li>openssl (should be included with your ruby distribution)</li>
+</ul>
+<p>Optional:</p>
+<ul>
+<li>httparty (for the client)</li>
+</ul>

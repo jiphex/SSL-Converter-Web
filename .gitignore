@@ -1,2 +1,4 @@
 uploads/*
 *.swp
+log/*
+*.patch

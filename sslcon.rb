@@ -26,9 +26,12 @@ module OpenSSL::X509
   end
 end
 
-enable :sessions
-
-set :public_folder, File.dirname(__FILE__) +'/public'
+configure do
+  enable :sessions
+  set :static_cache_control, :public
+  set :public_folder, File.dirname(__FILE__) +'/public'
+  set :session_secret, '47d292ec431cae6bf26cb772a56ca82859f3766f'
+end
 
 helpers do
   def init_db
@@ -52,31 +55,33 @@ helpers do
   end
 
   def valid_session?
-    return 401 unless session[:skey]
+    return 401 unless session[:session_id]
     return true # TODO: Implement
   end
 
   def user_certificates(key) 
     ucerts = {}
     dbc = get_db
-    dbc.execute("select cert_pem,key_pem from certs where owner == ?", session[:skey]) do |row|
+    dbc.execute("select cert_pem,key_pem from certs where owner == ?", session[:session_id]) do |row|
       cert_pem = row[0]
       cert = OpenSSL::X509::Certificate.new(cert_pem)
       key_pem = row[1]
       key = OpenSSL::PKey::RSA.new(key_pem)
       ucerts[cert.uniq_name] = [cert,key]
     end
+    dbc.close unless dbc.closed?
     return ucerts
   end
 
   def get_certdata(cert_id)
     return 401 unless valid_session?
     dbc = get_db
-    dbc.execute("select cert_pem,key_pem from certs where owner == ?", session[:skey]) do |row|
+    dbc.execute("select cert_pem,key_pem from certs where owner == ?", session[:session_id]) do |row|
         ucert = OpenSSL::X509::Certificate.new(row[0])
         ukey = OpenSSL::PKey::RSA.new(row[1])
         return [ucert,ukey] if(ucert.uniq_name == cert_id)
     end
+    dbc.close unless dbc.closed?
     return false
   end
 end
@@ -90,15 +95,10 @@ end
 before do
   cache_control :private
   @title = 'SSL Converter!'
+  logger.info session
 end
 
 get '/' do
-  if session[:skey]
-    @key = session[:skey]
-  else
-    session[:skey] = rand(36**8).to_s(36)
-    @key = "NEWNEWNEW"
-  end
   haml :index, :format => :html5
 end
 
@@ -124,7 +124,7 @@ post '/upload' do
                   xcert.not_after.to_i,
                   xcert.to_pem,
                   xkey.to_pem,
-                  session[:skey])
+                  session[:session_id])
       certok = true
     when :pkcs12
       raise ArgumentError unless params[:certpass]
@@ -138,13 +138,14 @@ post '/upload' do
                   xcert.not_after.to_i,
                   xcert.to_pem,
                   xkey.to_pem,
-                  session[:skey])
+                  session[:session_id])
       certok = true
     else
       certok = false
       # TODO: error?
     end
   ensure
+    dbc.close unless dbc.closed?
     tempfile.close
   end
   redirect "/process" if certok
@@ -204,7 +205,7 @@ delete '/certificate/:certid' do
   return 401 unless valid_session?
   targetid = -1
   dbc = get_db
-  rows = dbc.execute("select cert_pem,id from certs where owner == ?", session[:skey])
+  rows = dbc.execute("select cert_pem,id from certs where owner == ?", session[:session_id])
   p rows
   rows.each do |row|
       ucert = OpenSSL::X509::Certificate.new(row[0])
@@ -217,11 +218,13 @@ delete '/certificate/:certid' do
   end
   logger.info "TARGETID is #{targetid}"
   if targetid.to_i >= 0
-    res = dbc.execute("delete from certs where owner == ? and id == ?", session[:skey],targetid)
+    res = dbc.execute("delete from certs where owner == ? and id == ?", session[:session_id],targetid)
+    dbc.close unless dbc.closed?
     return "OK" if res.length > 0
     status 404
     "Certificate Not Deleted"
   end
+  dbc.close unless dbc.closed?
   status 404
   "Certificate Not in DB"
 end
@@ -232,7 +235,7 @@ get '/upload' do
 end
 
 get '/process' do
-  @key = session[:skey]
+  @key = session[:session_id]
   @certs = user_certificates(@key)
   redirect "/" unless valid_session?
   haml :process
