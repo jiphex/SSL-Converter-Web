@@ -1,2 +1,12 @@
 SSL Format Converter
 ====================
+
+Requirements:
+* sinatra
+* haml
+* json
+* sqlite3
+* openssl (should be included with your ruby distribution)
+
+Optional:
+* httparty (for the client)

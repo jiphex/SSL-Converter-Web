@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby -rubygems
 
 # vim: ts=2:sw=2:expandtab
-# TODO: Convert to use SQLite for the certificate store
 
 require 'haml'
 require 'sinatra'
