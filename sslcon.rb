@@ -94,7 +94,7 @@ end
 
 before do
   cache_control :private
-  @title = 'SSL Converter!'
+  @title = 'SSL Format Converter'
   logger.info session
 end
 

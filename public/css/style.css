@@ -1,10 +1,10 @@
 body {
-	font-family: sans-serif;
-	margin: 10px;
+  font-family: sans-serif;
+  margin: 10px;
 }
 
 .hidden {
-	color: red;
+  display: none;
 }
 
 #title #nav {
