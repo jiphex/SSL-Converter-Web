@@ -3,3 +3,5 @@ uploads/*
 log/*
 *.patch
 *.db
+bin/*
+.bundle

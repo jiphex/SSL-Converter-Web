@@ -1,0 +1,10 @@
+%h2
+  Fill in this form to generate a Certificate Signing Request (CSR)
+%form{:name=>'csr',:method=>:post,:action=>"/request"}
+  %p=labelled_input('C','Country Code (Two-Letters)','GB')
+  %p=labelled_input('ST','State/Province Name','Greater Manchester')
+  %p=labelled_input('L','Locality','Manchester')
+  %p=labelled_input('O','Organization Name','Internet Widgits Pty Ltd')
+  %p=labelled_input('OU','Organization Unit','Sales department')
+  %p=labelled_input('CN','Common Name','www.example.com')
+  %input{:type=>:submit,:value=>"Generate Key and CSR"}
