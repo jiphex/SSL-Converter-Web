@@ -109,7 +109,7 @@ class SSLConverter < Sinatra::Base
     logger.info session
   end
 
-  get '/' do
+  get /\/(index)?$/ do
     haml :index, :format => :html5
   end
 
@@ -269,7 +269,7 @@ class SSLConverter < Sinatra::Base
 
   get '/logout' do
     session.clear
-    redirect "/" 
+    redirect "index" 
   end
 
   run! if app_file == $0

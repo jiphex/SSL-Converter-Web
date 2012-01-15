@@ -1,6 +1,6 @@
 require 'sinatra'
 
-root_dir = '/home/jhan/SSL-Converter-Web'
+root_dir = '/srv/ruby/ssl'
 
 app = File.join(root_dir, 'sslcon.rb')
 
